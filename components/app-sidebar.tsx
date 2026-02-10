@@ -17,7 +17,6 @@ import {
     ShieldAlert,
     FolderOpen,
     GraduationCap,
-    GraduationCap,
     MessageSquare,
     Phone
 } from "lucide-react"

@@ -18,7 +18,7 @@ export default function Home() {
           </nav>
           <div className="flex items-center gap-4">
             <Link href="/login" className="text-sm font-medium hover:underline">Login</Link>
-            <Link href="/signup" className="inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-sm font-bold text-primary-foreground shadow transition-colors hover:bg-primary/90">
+            <Link href="/signup" className="inline-flex items-center justify-center rounded-full bg-green-600 px-4 py-2 text-sm font-bold text-white shadow transition-colors hover:bg-green-700">
               Start Repair
             </Link>
           </div>
