@@ -14,12 +14,15 @@ export default function Home() {
           <nav className="hidden md:flex gap-6 text-sm font-medium text-muted-foreground">
             <Link href="#features" className="hover:text-primary transition-colors">Features</Link>
             <Link href="#pricing" className="hover:text-primary transition-colors">Pricing</Link>
-            <Link href="#attorneys" className="hover:text-primary transition-colors">For Attorneys</Link>
           </nav>
           <div className="flex items-center gap-4">
-            <Link href="/client" className="text-sm font-medium hover:underline">Login</Link>
+            <div className="hidden md:flex items-center gap-4 text-sm font-medium">
+              <Link href="/admin" className="text-muted-foreground hover:text-foreground">Admin</Link>
+              <Link href="/attorney" className="text-muted-foreground hover:text-foreground">Attorney</Link>
+              <Link href="/agency" className="text-muted-foreground hover:text-foreground">Agency</Link>
+            </div>
             <Link href="/client" className="inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-sm font-bold text-primary-foreground shadow transition-colors hover:bg-primary/90">
-              Start Repair
+              Client Login
             </Link>
           </div>
         </div>
