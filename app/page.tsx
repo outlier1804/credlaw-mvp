@@ -1,5 +1,6 @@
 import Link from "next/link"
-import { Shield, Gavel, FileText, CheckCircle, ArrowRight, Star } from "lucide-react"
+import { Shield, Gavel, FileText, CheckCircle, ArrowRight, Star, Plus, Minus } from "lucide-react"
+import { LandingChatbot } from "@/components/landing-chatbot";
 
 export default function Home() {
   return (
@@ -85,6 +86,28 @@ export default function Home() {
           </div>
         </section>
 
+        {/* FAQ Section */}
+        <section className="py-20 bg-secondary/10">
+          <div className="container mx-auto px-4 max-w-4xl">
+            <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
+            <div className="space-y-4">
+              {[
+                { q: "Is this legal?", a: "Yes. The FDCPA (Fair Debt Collection Practices Act) is a federal law that protects you from harassment. We simply help you enforce your rights." },
+                { q: "Do I have to go to court?", a: "Rarely. most cases settle out of court once the debt collector realizes we have evidence (call recordings) of their violation." },
+                { q: "How much does it cost?", a: "0$. We take a success fee only if you win. If we don't recover money for you, you pay nothing." },
+                { q: "How does the 'Predator Trap' work?", a: "We give you a unique phone number. You forward your calls to it. Our AI records and transcribes everything to find violations." }
+              ].map((faq, i) => (
+                <div key={i} className="bg-card border border-border rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
+                  <h3 className="font-bold text-lg mb-2 flex items-center justify-between">
+                    {faq.q}
+                  </h3>
+                  <p className="text-muted-foreground">{faq.a}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Social Proof / Stats */}
         <section className="py-20 border-y border-border">
           <div className="container mx-auto px-4 grid md:grid-cols-4 gap-8 text-center">
@@ -108,6 +131,9 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        {/* Floating Chatbot */}
+        <LandingChatbot />
       </main>
 
       <footer className="py-10 border-t border-border">
