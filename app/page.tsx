@@ -17,7 +17,7 @@ export default function Home() {
           </nav>
           <div className="flex items-center gap-4">
             <Link href="/login" className="text-sm font-medium hover:underline">Login</Link>
-            <Link href="/login" className="inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-sm font-bold text-primary-foreground shadow transition-colors hover:bg-primary/90">
+            <Link href="/signup" className="inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-sm font-bold text-primary-foreground shadow transition-colors hover:bg-primary/90">
               Start Repair
             </Link>
           </div>
@@ -39,7 +39,7 @@ export default function Home() {
               Don't just dispute. <strong>Litigate.</strong> CredLaw analyzes your credit report for violations (FCRA, FDCPA), auto-drafts demand letters, and connects you with attorneys to sue for up to $1,000 per violation.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/login" className="inline-flex h-12 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90">
+              <Link href="/signup" className="inline-flex h-12 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90">
                 Audit My Report Free <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
               <Link href="#how-it-works" className="inline-flex h-12 items-center justify-center rounded-md border border-input bg-background px-8 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground">
