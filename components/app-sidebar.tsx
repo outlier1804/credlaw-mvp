@@ -16,7 +16,8 @@ import {
     AppWindow,
     ShieldAlert,
     FolderOpen,
-    GraduationCap
+    GraduationCap,
+    MessageSquare
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -42,12 +43,14 @@ export function AppSidebar() {
         { href: '/agency/clients', label: 'Client CRM', icon: Users },
         { href: '/agency/attorneys', label: 'Attorney Network', icon: Gavel },
         { href: '/agency/settings', label: 'Agent Customizer', icon: Settings },
+        { href: '/agency/messages', label: 'Case Chat', icon: MessageSquare },
     ];
 
     const attorneyMenu = [
         { href: '/attorney', label: 'Litigation Feed', icon: Gavel },
         { href: '/attorney/cases', label: 'Case Files', icon: Briefcase },
         { href: '/attorney/billing', label: 'Settlements', icon: CreditCard },
+        { href: '/attorney/messages', label: 'Case Chat', icon: MessageSquare },
     ];
 
     const clientMenu = [
@@ -56,6 +59,7 @@ export function AppSidebar() {
         { href: '/client/violations', label: 'Violation Vault', icon: ShieldAlert },
         { href: '/client/documents', label: 'Evidence Locker', icon: FolderOpen },
         { href: '/client/education', label: 'Credit Builder', icon: GraduationCap },
+        { href: '/client/messages', label: 'Case Chat', icon: MessageSquare },
     ];
 
     let currentMenu = clientMenu; // Default fallback
