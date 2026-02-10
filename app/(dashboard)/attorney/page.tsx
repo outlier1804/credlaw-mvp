@@ -1,109 +1,150 @@
 'use client';
 
-import { useState } from "react"
-import { Scale, Users, TrendingUp, AlertCircle, Plus } from "lucide-react"
-import { ViolationCard } from "@/components/violation-card"
-import { MailingModal } from "@/components/mailing-modal"
+import {
+    Gavel,
+    CheckCircle2,
+    XCircle,
+    FileText,
+    DollarSign,
+    Clock,
+    ShieldAlert,
+    MoreHorizontal
+} from "lucide-react"
+import Link from "next/link";
 
-export default function AttorneyDashboard() {
-    const [modalOpen, setModalOpen] = useState(false);
-    const [selectedCase, setSelectedCase] = useState<{ client: string, violation: string } | null>(null);
-
-    const handleGenerate = (client: string, violation: string) => {
-        setSelectedCase({ client, violation });
-        setModalOpen(true);
-    };
-
+export default function AttorneyDashboardPage() {
     return (
-        <div className="space-y-8">
-            {/* Header Section */}
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div className="space-y-8 animate-in fade-in duration-500 max-w-5xl mx-auto">
+            {/* Header */}
+            <div className="flex justify-between items-center">
                 <div>
-                    <h2 className="text-3xl font-bold tracking-tight">Litigation Feed</h2>
-                    <p className="text-muted-foreground">Review actionable violations and generate federal complaints.</p>
+                    <h1 className="text-3xl font-bold tracking-tight">Litigation Feed</h1>
+                    <p className="text-muted-foreground">High-value FCRA/FDCPA cases ready for filing.</p>
                 </div>
-                <div className="flex gap-2">
-                    <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
-                        Filter View
-                    </button>
-                    <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
-                        <Plus className="mr-2 h-4 w-4" />
-                        Buy Leads
-                    </button>
+                <div className="flex gap-4 text-sm font-medium">
+                    <div className="flex items-center gap-2 px-3 py-1.5 bg-green-100 text-green-700 rounded-full">
+                        <DollarSign className="h-4 w-4" />
+                        <span>Potential Fees: $4,500</span>
+                    </div>
+                    <div className="flex items-center gap-2 px-3 py-1.5 bg-blue-100 text-blue-700 rounded-full">
+                        <Gavel className="h-4 w-4" />
+                        <span>Active Cases: 12</span>
+                    </div>
                 </div>
             </div>
 
-            {/* Metrics Section */}
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                {[
-                    { title: "Litigation Ready", value: "12", icon: Scale, change: "+3 today", color: "text-blue-500" },
-                    { title: "Potential Revenue", value: "$18,500", icon: TrendingUp, change: "Based on statutory damages", color: "text-green-500" },
-                    { title: "Active Clients", value: "45", icon: Users, change: "8 pending intake", color: "text-indigo-500" },
-                    { title: "Critical Violations", value: "8", icon: AlertCircle, change: "Requires immediate action", color: "text-red-500" },
-                ].map((metric, i) => (
-                    <div key={i} className="rounded-xl border border-border bg-card text-card-foreground shadow p-6">
-                        <div className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <h3 className="tracking-tight text-sm font-medium text-muted-foreground">{metric.title}</h3>
-                            <metric.icon className={`h-4 w-4 ${metric.color}`} />
+            {/* Case Feed */}
+            <div className="space-y-4">
+
+                {/* Case Card 1 (High Priority) */}
+                <div className="group bg-card border border-border rounded-xl p-6 shadow-sm hover:shadow-md transition-all relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-1 h-full bg-green-500"></div>
+                    <div className="flex flex-col md:flex-row gap-6">
+
+                        {/* Violations Summary */}
+                        <div className="flex-1 space-y-4">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                    <div className="h-10 w-10 rounded-full bg-zinc-100 flex items-center justify-center font-bold text-zinc-900">JD</div>
+                                    <div>
+                                        <h3 className="font-bold text-lg">John Doe vs. Equifax</h3>
+                                        <p className="text-sm text-muted-foreground">Ref: #CASE-9281 • Agency: CreditCleanup Pros</p>
+                                    </div>
+                                </div>
+                                <span className="bg-green-100 text-green-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
+                                    Litigation Ready
+                                </span>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="bg-secondary/50 p-3 rounded-lg">
+                                    <span className="text-xs text-muted-foreground uppercase font-bold block mb-1">Primary Violation</span>
+                                    <div className="flex items-center gap-2 font-medium text-sm">
+                                        <ShieldAlert className="h-4 w-4 text-red-500" />
+                                        15 U.S.C. § 1681i (Failure to Reinvestigate)
+                                    </div>
+                                </div>
+                                <div className="bg-secondary/50 p-3 rounded-lg">
+                                    <span className="text-xs text-muted-foreground uppercase font-bold block mb-1">Damages Estimate</span>
+                                    <div className="flex items-center gap-2 font-medium text-sm text-green-600">
+                                        <DollarSign className="h-4 w-4" />
+                                        $1,000 Statutory + Fees
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="flex gap-2">
+                                <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">Hinkle v. Midland Cited</span>
+                                <span className="inline-flex items-center rounded-md bg-purple-50 px-2 py-1 text-xs font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10">Complete Evid. Pack</span>
+                            </div>
                         </div>
-                        <div className="pt-0">
-                            <div className="text-2xl font-bold">{metric.value}</div>
-                            <p className="text-xs text-muted-foreground">{metric.change}</p>
+
+                        {/* Actions */}
+                        <div className="flex flex-col justify-center gap-3 min-w-[180px] border-l border-border pl-6">
+                            <div className="text-xs text-muted-foreground mb-2 flex items-center gap-1">
+                                <Clock className="h-3 w-3" /> Expires in 24h
+                            </div>
+                            <Link href="/attorney/cases/9281" className="w-full inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-bold text-primary-foreground shadow transition-colors hover:bg-primary/90">
+                                <CheckCircle2 className="mr-2 h-4 w-4" /> Accept Case
+                            </Link>
+                            <button className="w-full inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground">
+                                <XCircle className="mr-2 h-4 w-4" /> Reject
+                            </button>
                         </div>
                     </div>
-                ))}
-            </div>
-
-            {/* Main Feed */}
-            <div className="space-y-4">
-                <h3 className="font-semibold text-lg tracking-tight">High Priority Violations</h3>
-                <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-                    <ViolationCard
-                        clientName="Sarah Jenkins"
-                        violationType="Hinkle v. Midland Credit"
-                        statute="15 U.S.C. § 1681i"
-                        damages={1000}
-                        evidenceStrength="High"
-                        status="Litigation Ready"
-                        onGenerateComplaint={() => handleGenerate("Sarah Jenkins", "Hinkle v. Midland Credit")}
-                    />
-                    <ViolationCard
-                        clientName="Michael Torres"
-                        violationType="Saunders v. BB&T"
-                        statute="15 U.S.C. § 1681s-2(a)"
-                        damages={1000}
-                        evidenceStrength="High"
-                        status="Litigation Ready"
-                        onGenerateComplaint={() => handleGenerate("Michael Torres", "Saunders v. BB&T")}
-                    />
-                    <ViolationCard
-                        clientName="David Chen"
-                        violationType="Wrongful Repo Notice"
-                        statute="UCC Article 9"
-                        damages={5000}
-                        evidenceStrength="Medium"
-                        status="Confirmed"
-                        onGenerateComplaint={() => handleGenerate("David Chen", "Wrongful Repo Notice")}
-                    />
-                    <ViolationCard
-                        clientName="Amanda Smith"
-                        violationType="Norman v. TransUnion"
-                        statute="15 U.S.C. § 1681i(a)(7)"
-                        damages={1000}
-                        evidenceStrength="High"
-                        status="Detected"
-                        onGenerateComplaint={() => handleGenerate("Amanda Smith", "Norman v. TransUnion")}
-                    />
                 </div>
-            </div>
 
-            {/* Mailing Modal */}
-            <MailingModal
-                isOpen={modalOpen}
-                onClose={() => setModalOpen(false)}
-                clientName={selectedCase?.client || ""}
-                violationType={selectedCase?.violation || ""}
-            />
+                {/* Case Card 2 */}
+                <div className="group bg-card border border-border rounded-xl p-6 shadow-sm hover:shadow-md transition-all relative overflow-hidden opacity-90">
+                    <div className="absolute top-0 left-0 w-1 h-full bg-yellow-500"></div>
+                    <div className="flex flex-col md:flex-row gap-6">
+                        <div className="flex-1 space-y-4">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                    <div className="h-10 w-10 rounded-full bg-zinc-100 flex items-center justify-center font-bold text-zinc-900">SM</div>
+                                    <div>
+                                        <h3 className="font-bold text-lg">Sarah Miller vs. Chase Bank</h3>
+                                        <p className="text-sm text-muted-foreground">Ref: #CASE-8821 • Agency: Elite Credit</p>
+                                    </div>
+                                </div>
+                                <span className="bg-yellow-100 text-yellow-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
+                                    MOV Failure
+                                </span>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="bg-secondary/50 p-3 rounded-lg">
+                                    <span className="text-xs text-muted-foreground uppercase font-bold block mb-1">Primary Violation</span>
+                                    <div className="flex items-center gap-2 font-medium text-sm">
+                                        <ShieldAlert className="h-4 w-4 text-orange-500" />
+                                        Norman v. TransUnion (MOV)
+                                    </div>
+                                </div>
+                                <div className="bg-secondary/50 p-3 rounded-lg">
+                                    <span className="text-xs text-muted-foreground uppercase font-bold block mb-1">Damages Estimate</span>
+                                    <div className="flex items-center gap-2 font-medium text-sm text-green-600">
+                                        <DollarSign className="h-4 w-4" />
+                                        $1,000 + Punitive
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="flex flex-col justify-center gap-3 min-w-[180px] border-l border-border pl-6">
+                            <div className="text-xs text-muted-foreground mb-2 flex items-center gap-1">
+                                <Clock className="h-3 w-3" /> Expires in 48h
+                            </div>
+                            <button className="w-full inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-bold text-primary-foreground shadow transition-colors hover:bg-primary/90">
+                                <CheckCircle2 className="mr-2 h-4 w-4" /> Accept Case
+                            </button>
+                            <button className="w-full inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground">
+                                <XCircle className="mr-2 h-4 w-4" /> Reject
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
     )
 }
