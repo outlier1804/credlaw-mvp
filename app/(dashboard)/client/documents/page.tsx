@@ -7,8 +7,10 @@ import {
     Image as ImageIcon,
     MoreVertical,
     Search,
-    Download
+    Download,
+    CheckCircle2
 } from "lucide-react"
+import { ContractAnalyzer } from "@/components/contract-analyzer";
 
 export default function EvidenceLockerPage() {
     return (
@@ -126,6 +128,37 @@ export default function EvidenceLockerPage() {
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+
+            {/* Contract Analyzer Card */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h2 className="text-xl font-bold mb-4">Step 1: Upload Your Contract</h2>
+                    <p className="text-muted-foreground mb-4">
+                        We need to find the "Binding Arbitration" clause in your cardholder agreement. This is how we get paid.
+                    </p>
+                    <ContractAnalyzer />
+                </div>
+
+                {/* Drag & Drop Main Uploader */}
+                <div>
+                    <h2 className="text-xl font-bold mb-4">Step 2: Upload Evidence</h2>
+                    <p className="text-muted-foreground mb-4">
+                        Upload denial letters, credit reports, and dispute results here.
+                    </p>
+                    <div className="border-2 border-dashed border-input rounded-xl p-10 flex flex-col items-center justify-center text-center hover:bg-muted/50 transition-colors h-[320px]">
+                        <div className="bg-primary/10 p-4 rounded-full mb-4">
+                            <UploadCloud className="h-8 w-8 text-primary" />
+                        </div>
+                        <h3 className="font-bold text-lg mb-2">Drag & Drop Files Here</h3>
+                        <p className="text-muted-foreground text-sm max-w-xs mb-6">
+                            Upload Denial Letters, Dispute Responses, or Credit Reports (PDF/JPG)
+                        </p>
+                        <button className="bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 rounded-md font-bold text-sm transition-colors shadow">
+                            Select Files
+                        </button>
+                    </div>
                 </div>
             </div>
 
