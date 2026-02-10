@@ -32,18 +32,18 @@ export default function Home() {
               <span className="flex h-2 w-2 rounded-full bg-primary mr-2 animate-pulse"></span>
               New: AI Arbitration Scanner
             </div>
-            <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight mb-6 bg-gradient-to-br from-foreground to-muted-foreground bg-clip-text text-transparent">
-              Stop Disputing. <br /> Start Litigating.
+            <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight mb-6 bg-gradient-to-br from-green-400 to-green-700 bg-clip-text text-transparent">
+              Turn Robocalls into <br /> $1,000 Lawsuits.
             </h1>
             <p className="mx-auto max-w-[700px] text-lg md:text-xl text-muted-foreground mb-10">
-              Most credit repair letters are ignored. <strong>CredLaw</strong> builds a federal case for every violation. Scan your contract, find the arbitration clause, and force them to pay.
+              Don't just hang up. <strong>Trap them.</strong> Use our AI Burner Number to record debt collectors. We transcribe the call, detect illegal threats (FDCPA), and auto-generate a lawsuit to get you paid.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/signup" className="inline-flex h-12 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90">
-                Audit My Report Free <ArrowRight className="ml-2 h-4 w-4" />
+              <Link href="/signup" className="inline-flex h-12 items-center justify-center rounded-md bg-green-600 px-8 text-sm font-bold text-white shadow transition-all hover:bg-green-700 hover:scale-105">
+                Calculate My Claim Value 💸 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
               <Link href="#how-it-works" className="inline-flex h-12 items-center justify-center rounded-md border border-input bg-background px-8 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground">
-                How Analysis Works
+                How Call Trapping Works
               </Link>
             </div>
           </div>
