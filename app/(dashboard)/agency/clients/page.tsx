@@ -52,13 +52,51 @@ export default function AgencyClientsPage() {
                 </div>
             </div>
 
+
+            interface TimelineStep {
+                label: string;
+            description: string;
+            active: boolean;
+            completed: boolean;
+}
+
+            function ReclaimTimeline({steps}: {steps: TimelineStep[] }) {
+    return (
+            <div className="flex items-center w-full max-w-xs">
+                {steps.map((step, index) => (
+                    <div key={step.label} className="relative flex-1 group">
+                        {/* Line */}
+                        {index !== 0 && (
+                            <div className={`absolute top-1.5 right-1/2 w-full h-0.5 -translate-y-1/2 ${step.completed || step.active ? 'bg-primary' : 'bg-secondary'}`} style={{ right: '50%', width: '100%' }}></div>
+                        )}
+
+                        {/* Dot */}
+                        <div className="relative flex flex-col items-center group">
+                            <div className={`w-3 h-3 rounded-full border-2 z-10 ${step.completed ? 'bg-primary border-primary' :
+                                    step.active ? 'bg-primary border-primary animate-pulse' :
+                                        'bg-background border-muted'
+                                }`}></div>
+
+                            {/* Tooltip */}
+                            <div className="absolute bottom-4 hidden group-hover:block bg-black text-white text-[10px] px-2 py-1 rounded whitespace-nowrap z-20">
+                                {step.label}
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+            )
+}
+
+            // ... (Rest of component)
+
             {/* Client Table */}
             <div className="rounded-xl border border-border bg-card overflow-hidden shadow-sm">
                 <table className="w-full text-sm text-left">
                     <thead className="bg-muted/50 text-muted-foreground font-medium border-b border-border">
                         <tr>
                             <th className="px-6 py-4">Client Name</th>
-                            <th className="px-6 py-4">Status</th>
+                            <th className="px-6 py-4 w-[300px]">Reclaim Timeline</th>
                             <th className="px-6 py-4">Violations</th>
                             <th className="px-6 py-4">Est. Value</th>
                             <th className="px-6 py-4">Last Action</th>
@@ -75,9 +113,14 @@ export default function AgencyClientsPage() {
                                 </div>
                             </td>
                             <td className="px-6 py-4">
-                                <span className="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-semibold text-green-800">
-                                    Ready for Litigation
-                                </span>
+                                <ReclaimTimeline steps={[
+                                    { label: 'Dispute', description: 'Sent Round 1', active: false, completed: true },
+                                    { label: 'Reinvestigation', description: 'CRA Verified', active: false, completed: true },
+                                    { label: 'MOV', description: 'Method Requested', active: false, completed: true },
+                                    { label: 'Demand', description: 'Letter Sent', active: false, completed: true },
+                                    { label: 'Litigation', description: 'Ready to File', active: true, completed: false },
+                                ]} />
+                                <span className="text-[10px] font-bold text-green-600 mt-1 block pl-1">READY FOR SUIT</span>
                             </td>
                             <td className="px-6 py-4">
                                 <span className="font-bold text-red-600">8 Found</span>
@@ -96,7 +139,7 @@ export default function AgencyClientsPage() {
                             </td>
                         </tr>
 
-                        {/* Row 2: In Dispute */}
+                        {/* Row 2: In Dispute (MOV Phase) */}
                         <tr className="hover:bg-muted/50 transition-colors group">
                             <td className="px-6 py-4 font-medium">
                                 <div className="flex flex-col">
@@ -105,9 +148,14 @@ export default function AgencyClientsPage() {
                                 </div>
                             </td>
                             <td className="px-6 py-4">
-                                <span className="inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-semibold text-yellow-800">
-                                    Round 2 (MOV)
-                                </span>
+                                <ReclaimTimeline steps={[
+                                    { label: 'Dispute', description: 'Sent Round 1', active: false, completed: true },
+                                    { label: 'Reinvestigation', description: 'CRA Verified', active: false, completed: true },
+                                    { label: 'MOV', description: 'Method Requested', active: true, completed: false },
+                                    { label: 'Demand', description: 'Letter Sent', active: false, completed: false },
+                                    { label: 'Litigation', description: 'Ready to File', active: false, completed: false },
+                                ]} />
+                                <span className="text-[10px] font-medium text-orange-500 mt-1 block pl-1">MOV SENT</span>
                             </td>
                             <td className="px-6 py-4">
                                 <span className="font-bold text-orange-500">2 Potential</span>
@@ -140,9 +188,14 @@ export default function AgencyClientsPage() {
                                 </div>
                             </td>
                             <td className="px-6 py-4">
-                                <span className="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-semibold text-blue-800">
-                                    Newly Imported
-                                </span>
+                                <ReclaimTimeline steps={[
+                                    { label: 'Dispute', description: 'Sent Round 1', active: true, completed: false },
+                                    { label: 'Reinvestigation', description: 'CRA Verified', active: false, completed: false },
+                                    { label: 'MOV', description: 'Method Requested', active: false, completed: false },
+                                    { label: 'Demand', description: 'Letter Sent', active: false, completed: false },
+                                    { label: 'Litigation', description: 'Ready to File', active: false, completed: false },
+                                ]} />
+                                <span className="text-[10px] font-medium text-blue-500 mt-1 block pl-1">NEW IMPORT</span>
                             </td>
                             <td className="px-6 py-4">
                                 <span className="font-bold text-muted-foreground">Scanning...</span>
