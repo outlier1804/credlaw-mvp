@@ -30,13 +30,13 @@ export default function Home() {
           <div className="container mx-auto px-4 text-center relative z-10">
             <div className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-sm text-primary mb-6">
               <span className="flex h-2 w-2 rounded-full bg-primary mr-2 animate-pulse"></span>
-              Now with AI-Powered Litigation
+              New: AI Arbitration Scanner
             </div>
             <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight mb-6 bg-gradient-to-br from-foreground to-muted-foreground bg-clip-text text-transparent">
-              Credit Repair that <br /> Ends in a Lawsuit.
+              Stop Disputing. <br /> Start Litigating.
             </h1>
             <p className="mx-auto max-w-[700px] text-lg md:text-xl text-muted-foreground mb-10">
-              Don't just dispute. <strong>Litigate.</strong> CredLaw analyzes your credit report for violations (FCRA, FDCPA), auto-drafts demand letters, and connects you with attorneys to sue for up to $1,000 per violation.
+              Most credit repair letters are ignored. <strong>CredLaw</strong> builds a federal case for every violation. Scan your contract, find the arbitration clause, and force them to pay.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/signup" className="inline-flex h-12 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90">
@@ -56,8 +56,8 @@ export default function Home() {
         <section id="features" className="py-20 bg-secondary/20">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold tracking-tight mb-4">Turn Violations into Compensation</h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">Most credit repair is just "letters". We build a legal case for every inaccurate item on your report.</p>
+              <h2 className="text-3xl font-bold tracking-tight mb-4">The "Reclaim Method" Engine</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">We don't send generic letters. We identify "Procedural Negligence" and leverage it for deletions and settlement checks.</p>
             </div>
             <div className="grid md:grid-cols-3 gap-8">
               <div className="bg-card p-8 rounded-2xl border border-border shadow-sm">
