@@ -12,7 +12,11 @@ import {
     Shield,
     Gavel,
     Briefcase,
-    Home
+    Home,
+    AppWindow,
+    ShieldAlert,
+    FolderOpen,
+    GraduationCap
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -47,10 +51,11 @@ export function AppSidebar() {
     ];
 
     const clientMenu = [
-        { href: '/client', label: 'My Repair Status', icon: Home },
-        { href: '/client/documents', label: 'Document Locker', icon: FileText },
-        { href: '/client/billing', label: 'Billing', icon: CreditCard },
-        { href: '/client/settings', label: 'Profile', icon: Settings },
+        { href: '/client', label: 'Command Center', icon: AppWindow }, // New Home
+        { href: '/client/disputes', label: 'Dispute Center', icon: Gavel },
+        { href: '/client/violations', label: 'Violation Vault', icon: ShieldAlert },
+        { href: '/client/documents', label: 'Evidence Locker', icon: FolderOpen },
+        { href: '/client/education', label: 'Credit Builder', icon: GraduationCap },
     ];
 
     let currentMenu = clientMenu; // Default fallback
