@@ -17,7 +17,9 @@ import {
     ShieldAlert,
     FolderOpen,
     GraduationCap,
-    MessageSquare
+    GraduationCap,
+    MessageSquare,
+    Phone
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -60,6 +62,7 @@ export function AppSidebar() {
         { href: '/client/documents', label: 'Evidence Locker', icon: FolderOpen },
         { href: '/client/education', label: 'Credit Builder', icon: GraduationCap },
         { href: '/client/messages', label: 'Case Chat', icon: MessageSquare },
+        { href: '/client/calls', label: 'Predator Call Trap', icon: Phone },
     ];
 
     let currentMenu = clientMenu; // Default fallback
