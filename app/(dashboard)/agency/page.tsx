@@ -1,6 +1,7 @@
 'use client';
 
 import { Users, FileText, ArrowRight, Upload } from "lucide-react"
+import { AgentCustomizer } from "@/components/agent-customizer"
 
 export default function AgencyDashboard() {
     return (
@@ -98,6 +99,8 @@ export default function AgencyDashboard() {
                     </table>
                 </div>
             </div>
+            {/* Agent Customization Section */}
+            <AgentCustomizer />
         </div>
     )
 }

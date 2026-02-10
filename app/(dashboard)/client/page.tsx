@@ -1,8 +1,48 @@
 'use client';
 
-import { Upload, Mic, FileText, Shield, AlertTriangle } from "lucide-react"
+import { useState } from 'react';
+import { Upload, Mic, FileText, Shield, AlertTriangle, CheckCircle, Scale } from "lucide-react"
+import { SupportAgentWidget } from "@/components/support-agent-widget"
+import { FileUploader } from "@/components/file-uploader"
+import { DisputeTimeline, DisputeStep } from "@/components/dispute-timeline"
+import { analyzeResponseLetter, AnalyzerResult } from "@/lib/response-analyzer"
+import { OnboardingAgreement } from "@/components/onboarding-agreement"
 
 export default function ClientDashboard() {
+    const [isOnboarding, setIsOnboarding] = useState(true); // Default to true for demo
+    const [currentStep, setCurrentStep] = useState<DisputeStep>('WAITING_RESPONSE');
+    const [analysisResult, setAnalysisResult] = useState<AnalyzerResult | null>(null);
+    const [isAnalyzing, setIsAnalyzing] = useState(false);
+
+    // Mock Actions
+    const handleSignLetters = () => {
+        alert("Redirecting to DocuSign... (Mock)");
+        setCurrentStep('MAILED');
+    };
+
+    const handleResponseUpload = async (fileName: string) => {
+        setCurrentStep('RESPONSE_RECEIVED');
+        setIsAnalyzing(true);
+
+        // Simulate reading the file text (e.g., "The item was verified")
+        const mockPdfText = "Dear Consumer, we have investigated your dispute. The item remains... verified as accurate.";
+
+        const result = await analyzeResponseLetter(mockPdfText);
+        setAnalysisResult(result);
+        setIsAnalyzing(false);
+        setCurrentStep('NEXT_STEPS');
+    };
+
+    if (isOnboarding) {
+        return (
+            <OnboardingAgreement
+                agencyName="Premier Credit Agency"
+                clientName="John Doe"
+                onAgree={() => setIsOnboarding(false)}
+            />
+        );
+    }
+
     return (
         <div className="space-y-8">
             {/* Header */}
@@ -17,8 +57,55 @@ export default function ClientDashboard() {
                 </div>
             </div>
 
-            {/* Voice Agent & Status */}
+            {/* Dispute Timeline Component */}
+            <DisputeTimeline
+                currentStep={currentStep}
+                daysRemaining={12} // Example: 12 days left in waiting period
+                onSignLetters={handleSignLetters}
+                onUploadResponse={() => document.getElementById('response-upload-trigger')?.click()}
+            />
+
+            {/* AI Analysis Result (Visible only after upload) */}
+            {currentStep === 'NEXT_STEPS' && analysisResult && (
+                <div className="rounded-xl border border-primary/20 bg-primary/5 p-6 animate-in fade-in slide-in-from-top-4">
+                    <div className="flex items-start gap-4">
+                        <div className="p-3 bg-primary/10 rounded-full">
+                            <CheckCircle className="h-6 w-6 text-primary" />
+                        </div>
+                        <div>
+                            <h3 className="font-semibold text-lg">AI Analysis Complete</h3>
+                            <p className="text-sm text-muted-foreground mt-1">Here is what we found in the response letter:</p>
+
+                            <div className="mt-4 grid gap-4 md:grid-cols-2">
+                                <div className="bg-background p-4 rounded-lg border border-border">
+                                    <span className="text-xs font-semibold uppercase text-muted-foreground">Findings</span>
+                                    <ul className="list-disc list-inside mt-2 text-sm space-y-1">
+                                        {analysisResult.findings.map((f, i) => (
+                                            <li key={i}>{f}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                                <div className="bg-background p-4 rounded-lg border border-border">
+                                    <span className="text-xs font-semibold uppercase text-muted-foreground">Recommended Strategy</span>
+                                    <p className="font-bold text-primary mt-2">{analysisResult.recommendedAction.replace(/_/g, ' ')}</p>
+                                    <p className="text-sm text-muted-foreground mt-1">{analysisResult.reasoning}</p>
+                                </div>
+                            </div>
+
+                            <div className="mt-6">
+                                <button className="bg-primary text-primary-foreground px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/90 flex items-center">
+                                    Proceed with Recommendations
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Main Content Grid */}
             <div className="grid gap-6 md:grid-cols-2">
+
+                {/* Voice Agent Status */}
                 <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
                     <div className="flex items-center justify-between mb-4">
                         <h3 className="font-semibold flex items-center gap-2">
@@ -33,88 +120,32 @@ export default function ClientDashboard() {
                     <p className="text-sm text-muted-foreground mb-4">
                         Your AI assistant will call you <strong>3 days before</strong> your dispute window ends to remind you to check for mail.
                     </p>
-                    <div className="p-3 bg-secondary/50 rounded-lg border border-border">
-                        <p className="text-xs font-mono text-muted-foreground">Last Check: Today at 9:00 AM - No action needed.</p>
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                        <span className="h-2 w-2 bg-green-500 rounded-full animate-pulse"></span>
+                        Next call scheduled: Feb 14, 2026
                     </div>
                 </div>
 
-                <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
-                    <div className="flex items-center justify-between mb-4">
-                        <h3 className="font-semibold flex items-center gap-2">
-                            <AlertTriangle className="h-5 w-5 text-yellow-500" />
-                            Action Required
-                        </h3>
-                        <span className="bg-yellow-500/10 text-yellow-500 text-xs px-2 py-1 rounded-full font-medium">1 Item</span>
-                    </div>
-                    <div className="space-y-3">
-                        <div className="flex items-start gap-3 p-3 bg-background rounded-lg border border-border">
-                            <div className="mt-1 h-2 w-2 rounded-full bg-yellow-500"></div>
-                            <div>
-                                <p className="text-sm font-medium">Upload Denial Letter</p>
-                                <p className="text-xs text-muted-foreground">Chase Bank dispute ended 2 days ago.</p>
-                            </div>
-                            <button className="ml-auto text-xs bg-primary text-primary-foreground px-3 py-1 rounded-md hover:bg-primary/90">
-                                Upload
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* Proof of Harm Locker */}
-            <div className="rounded-xl border border-border bg-card shadow-sm">
-                <div className="p-6 border-b border-border">
-                    <h3 className="font-semibold text-lg flex items-center gap-2">
+                {/* Proof of Harm / Response Uploader */}
+                <div className="rounded-xl border border-border bg-card shadow-sm p-6">
+                    <h3 className="font-semibold text-lg flex items-center gap-2 mb-4">
                         <FileText className="h-5 w-5" />
-                        Proof of Harm Locker
+                        Document Locker
                     </h3>
-                    <p className="text-sm text-muted-foreground mt-1">
-                        Upload "Adverse Action" letters or high-interest rate offers here to establish legal standing.
-                    </p>
-                </div>
 
-                <div className="p-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                    {/* Upload Box */}
-                    <div className="border-2 border-dashed border-muted-foreground/25 hover:border-primary/50 transition-colors rounded-xl p-8 flex flex-col items-center justify-center text-center cursor-pointer bg-muted/5">
-                        <div className="h-10 w-10 bg-secondary rounded-full flex items-center justify-center mb-3">
-                            <Upload className="h-5 w-5 text-muted-foreground" />
-                        </div>
-                        <p className="font-medium text-sm">Click to Upload</p>
-                        <p className="text-xs text-muted-foreground mt-1">PDF, JPG, or PNG (Max 10MB)</p>
-                    </div>
+                    {/* Hidden Trigger for Timeline Button */}
+                    <div id="response-upload-trigger" className="hidden"></div>
 
-                    {/* Existing Files */}
-                    <div className="group relative rounded-xl border border-border bg-background p-4 hover:shadow-md transition-all">
-                        <div className="absolute top-4 right-4 text-muted-foreground">
-                            <FileText className="h-4 w-4" />
-                        </div>
-                        <div className="mt-8">
-                            <p className="font-medium text-sm">Denial Letter - Capital One</p>
-                            <p className="text-xs text-muted-foreground mt-1">Uploaded Oct 12, 2025</p>
-                            <div className="flex gap-2 mt-3">
-                                <span className="inline-flex items-center rounded-full bg-red-500/10 px-2 py-0.5 text-xs font-medium text-red-500">
-                                    Denied Mortgage
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="group relative rounded-xl border border-border bg-background p-4 hover:shadow-md transition-all">
-                        <div className="absolute top-4 right-4 text-muted-foreground">
-                            <FileText className="h-4 w-4" />
-                        </div>
-                        <div className="mt-8">
-                            <p className="font-medium text-sm">High Interest Offer - Ally</p>
-                            <p className="text-xs text-muted-foreground mt-1">Uploaded Sep 28, 2025</p>
-                            <div className="flex gap-2 mt-3">
-                                <span className="inline-flex items-center rounded-full bg-orange-500/10 px-2 py-0.5 text-xs font-medium text-orange-500">
-                                    12% Rate
-                                </span>
-                            </div>
-                        </div>
-                    </div>
+                    <FileUploader
+                        onUploadComplete={handleResponseUpload}
+                        label={currentStep === 'WAITING_RESPONSE' ? "Upload CRA Response" : "Upload Evidence"}
+                        sublabel={currentStep === 'WAITING_RESPONSE' ? "Did you get a letter back? Drop it here." : "Adverse Action Notices, IDs, Proof of Address"}
+                    />
                 </div>
             </div>
+
+            {/* Floating Chat Agent */}
+            <SupportAgentWidget />
         </div>
     )
 }
